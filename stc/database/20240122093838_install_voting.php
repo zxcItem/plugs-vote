@@ -4,7 +4,7 @@ use plugin\voting\Service;
 use think\admin\extend\PhinxExtend;
 use think\migration\Migrator;
 
-class InstallVote extends Migrator
+class InstallVoting extends Migrator
 {
     /**
      * Change Method.
