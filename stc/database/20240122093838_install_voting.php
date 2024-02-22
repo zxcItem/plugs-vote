@@ -47,7 +47,7 @@ class InstallVoting extends Migrator
                 'name' => '投票管理',
                 'subs' => Service::menu(),
             ],
-        ], ['node' => 'plugin-vote/portal/index']);
+        ], ['node' => 'plugin-voting/portal/index']);
     }
 
     /**
