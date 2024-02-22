@@ -1,0 +1,91 @@
+<form action="{:sysuri()}" method="post" data-auto="true" class="layui-form-pane layui-tab layui-form layui-card" data-table-id="UserTable">
+    <ul class="layui-tab-title">
+        <li class="layui-this">基本信息</li>
+        <li>详细内容</li>
+    </ul>
+    <div class="layui-card-body padding-left-40 layui-tab-content">
+        <div class="layui-tab-item layui-show">
+            <fieldset>
+                <div class="layui-form-item">
+                    <label class="layui-form-label color-green">所属项目</label>
+                    <div class="layui-input-block">
+                        <select name="code" lay-search class="layui-select">
+                            {foreach $projects as $project}{if isset($vo.code) && $project.code eq $vo.code}
+                            <option selected value="{$project.code|default=''}">{$project.title|default=''}</option>
+                            {else}
+                            <option value="{$project.code|default=''}">{$project.title|default=''}</option>
+                            {/if}{/foreach}
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label color-green">选手昵称</label>
+                    <div class="layui-input-block">
+                        <input name="name" value="{$vo.name|default=''}" placeholder="请输入选手昵称" required class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item" pane="">
+                    <label class="layui-form-label color-green">审核状态</label>
+                    <div class="layui-input-block" >
+                        {empty name='vo.is_check'}{assign name='vo.is_check' value='1'}{/empty}
+                        {foreach ['等待审核','审核通过','拒绝通过'] as $key => $value}
+                        {if isset($vo.is_check) && $vo.is_check eq $key}
+                        <input type="radio" name="is_check" value="{$key}" title="{$value}" checked="">
+                        {else}
+                        <input type="radio" name="is_check" value="{$key}" title="{$value}">
+                        {/if}
+                        {/foreach}
+                    </div>
+                </div>
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label color-green">选手描述</label>
+                    <div class="layui-input-block">
+                        <textarea name="describe" placeholder="请输入选手描述" class="layui-textarea">{$vo.describe|default=""}</textarea>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <table class="layui-table">
+                        <thead>
+                        <tr>
+                            <th class="layui-form-label color-green">选手封面</th>
+                            <th class="text-left color-green" style="width:100%">展示图片</th>
+                        </tr>
+                        <tr>
+                            <td class="text-center text-top padding-0">
+                                <div class="help-images">
+                                    <input name="cover" data-max-width="500" data-max-height="500" type="hidden" value="{$vo.cover|default=''}">
+                                    <script>$('[name="cover"]').uploadOneImage();</script>
+                                </div>
+                            </td>
+                            <td class="text-left padding-0">
+                                <div class="help-images">
+                                    <input name="banner" data-max-width="2048" data-max-height="1024" type="hidden" value="{$vo.banner|default=''}">
+                                    <script>$('[name="banner"]').uploadMultipleImage();</script>
+                                </div>
+                            </td>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </fieldset>
+        </div>
+        <div class="layui-tab-item">
+            <label class="layui-form-item block relative margin-top-10">
+                <textarea placeholder="请输入详细内容" class="layui-textarea" name="content">{$vo.content|default=""}</textarea>
+            </label>
+        </div>
+    </div>
+
+    <div class="hr-line-dashed"></div>
+    {notempty name='vo.id'}<input type='hidden' value='{$vo.id}' name='id'>{/notempty}
+
+    <div class="layui-form-item text-center">
+        <button class="layui-btn" type='submit'>保存数据</button>
+        <button class="layui-btn layui-btn-danger" type='button' data-confirm="确定要取消编辑吗？" data-close>取消编辑</button>
+    </div>
+</form>
+<script>
+    require(['ckeditor'], function () {
+        window.createEditor('[name=content]', {height: 350})
+    });
+</script>

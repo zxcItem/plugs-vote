@@ -1,0 +1,153 @@
+<form action="{:sysuri()}" method="post" data-auto="true" class="layui-form-pane layui-tab layui-form layui-card">
+    <ul class="layui-tab-title">
+        <li class="layui-this">基本信息</li>
+        <li>参数设置</li>
+        <li>详细内容</li>
+    </ul>
+    <div class="layui-card-body padding-left-40 layui-tab-content">
+        <div class="layui-tab-item layui-show">
+            <fieldset>
+                <div class="layui-form-item">
+                    <label class="layui-form-label color-green">项目标题</label>
+                    <div class="layui-input-block">
+                        <input name="title" value="{$vo.title|default=''}" placeholder="请输入项目标题" required class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline" id="projectTime">
+                        <label class="layui-form-label color-green">项目周期</label>
+                        <div class="layui-input-inline" style="width: 200px;">
+                            <input type="text" name="start_time" id="start_time" placeholder="开始时间" value="{$vo.start_time|default=''}" required autocomplete="off" class="layui-input">
+                        </div>
+                        <div class="layui-form-mid">-</div>
+                        <div class="layui-input-inline" style="width: 200px;">
+                            <input type="text" name="end_time" id="end_time" placeholder="结束时间" value="{$vo.end_time|default=''}" required autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label color-green">项目描述</label>
+                    <div class="layui-input-block">
+                        <textarea name="describe" placeholder="请输入内容" class="layui-textarea">{$vo.describe|default=""}</textarea>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <table class="layui-table">
+                        <thead>
+                        <tr>
+                            <th class="layui-form-label color-green">项目封面</th>
+                            <th class="text-left color-green" style="width:100%">展示图片</th>
+                        </tr>
+                        <tr>
+                            <td class="text-center text-top padding-0">
+                                <div class="help-images">
+                                    <input name="cover" data-max-width="500" data-max-height="500" type="hidden" value="{$vo.cover|default=''}">
+                                    <script>$('[name="cover"]').uploadOneImage();</script>
+                                </div>
+                            </td>
+                            <td class="text-left padding-0">
+                                <div class="help-images">
+                                    <input name="banner" data-max-width="2048" data-max-height="1024" type="hidden" value="{$vo.banner|default=''}">
+                                    <script>$('[name="banner"]').uploadMultipleImage();</script>
+                                </div>
+                            </td>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </fieldset>
+        </div>
+
+        <div class="layui-tab-item">
+            <fieldset>
+                <div class="layui-form-item">
+                    <label class="layui-form-label color-green">关键字</label>
+                    <div class="layui-input-block">
+                        <input name="keywords" value="{$vo.keywords|default=''}" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label color-green">每日限额</label>
+                    <div class="layui-input-block">
+                        <input type="number" name="peritoneums" value="{$vo.peritoneums|default='3'}" placeholder="请输入每人每日投票总量"  class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label color-green">项目备注</label>
+                    <div class="layui-input-block">
+                        <textarea name="remark" placeholder="请输入项目备注" class="layui-textarea">{$vo.remark|default=""}</textarea>
+                    </div>
+                </div>
+                <div class="layui-form-item" pane="">
+                    <label class="layui-form-label color-green">开放报名</label>
+                    <div class="layui-input-block" >
+                        {empty name='vo.is_apply'}{assign name='vo.is_apply' value='0'}{/empty}
+                        {foreach ['关闭','开启'] as $key => $value}
+                        {if isset($vo.is_apply) && $vo.is_apply eq $key}
+                        <input type="radio" name="is_apply" value="{$key}" title="{$value}" checked="">
+                        {else}
+                        <input type="radio" name="is_apply" value="{$key}" title="{$value}">
+                        {/if}
+                        {/foreach}
+                    </div>
+                </div>
+                <div class="layui-form-item" pane="">
+                    <label class="layui-form-label color-green">允许评论</label>
+                    <div class="layui-input-block" >
+                        {empty name='vo.is_comment'}{assign name='vo.is_comment' value='0'}{/empty}
+                        {foreach ['关闭','开启'] as $key => $value}
+                        {if isset($vo.is_comment) && $vo.is_comment eq $key}
+                        <input type="radio" name="is_comment" value="{$key}" title="{$value}" checked="">
+                        {else}
+                        <input type="radio" name="is_comment" value="{$key}" title="{$value}">
+                        {/if}
+                        {/foreach}
+                    </div>
+                </div>
+                <div class="layui-form-item" pane="">
+                    <label class="layui-form-label color-green">启用验证</label>
+                    <div class="layui-input-block" >
+                        {empty name='vo.is_captcha'}{assign name='vo.is_captcha' value='0'}{/empty}
+                        {foreach ['关闭','开启'] as $key => $value}
+                        {if isset($vo.is_captcha) && $vo.is_captcha eq $key}
+                        <input type="radio" name="is_captcha" value="{$key}" title="{$value}" checked="">
+                        {else}
+                        <input type="radio" name="is_captcha" value="{$key}" title="{$value}">
+                        {/if}
+                        {/foreach}
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+
+        <div class="layui-tab-item">
+            <label class="layui-form-item block relative margin-top-10">
+                <textarea placeholder="请输入详细内容" class="layui-textarea" name="content">{$vo.content|default=""}</textarea>
+            </label>
+        </div>
+
+    </div>
+
+    <div class="hr-line-dashed"></div>
+    {notempty name='vo.id'}<input type='hidden' value='{$vo.id}' name='id'>{/notempty}
+    {notempty name='vo.code'}<input name='code' type='hidden' value='{$vo.code}'>{/notempty}
+
+    <div class="layui-form-item text-center">
+        <button class="layui-btn" type='submit'>保存数据</button>
+        <button class="layui-btn layui-btn-danger" type='button' data-confirm="确定要取消编辑吗？" data-close>取消编辑</button>
+    </div>
+</form>
+<script>
+    //日期范围
+    laydate.render({
+        elem: '#projectTime',
+        //设置开始日期、日期日期的 input 选择器
+        //数组格式为 2.6.6 开始新增，之前版本直接配置 true 或任意分割字符即可
+        type: 'datetime'
+        ,range: ['#start_time', '#end_time'],
+        rangeLinked: true
+    });
+    require(['ckeditor'], function () {
+        window.createEditor('[name=content]', {height: 350})
+    });
+</script>

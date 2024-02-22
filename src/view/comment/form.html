@@ -1,0 +1,31 @@
+<form action="{:sysuri()}" method="post" data-auto="true" class="layui-form-pane layui-form layui-card" data-table-id="UserTable">
+    <div class="layui-card-body padding-left-40">
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label color-green">评论内容</label>
+            <div class="layui-input-block">
+                <textarea class="layui-textarea layui-bg-gray" readonly>{$vo.comment|default=""}</textarea>
+            </div>
+        </div>
+        <div class="layui-form-item" pane="">
+            <label class="layui-form-label color-green">审核状态</label>
+            <div class="layui-input-block" >
+                {empty name='vo.is_check'}{assign name='vo.is_check' value='0'}{/empty}
+                {foreach ['等待审核','审核通过','拒绝通过'] as $key => $value}
+                {if isset($vo.is_check) && $vo.is_check eq $key}
+                <input type="radio" name="is_check" value="{$key}" title="{$value}" checked="">
+                {else}
+                <input type="radio" name="is_check" value="{$key}" title="{$value}">
+                {/if}
+                {/foreach}
+            </div>
+        </div>
+    </div>
+
+    <div class="hr-line-dashed"></div>
+    {notempty name='vo.id'}<input type='hidden' value='{$vo.id}' name='id'>{/notempty}
+
+    <div class="layui-form-item text-center">
+        <button class="layui-btn" type='submit'>保存数据</button>
+        <button class="layui-btn layui-btn-danger" type='button' data-confirm="确定要取消编辑吗？" data-close>取消编辑</button>
+    </div>
+</form>

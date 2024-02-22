@@ -1,0 +1,46 @@
+<form action="{:sysuri()}" class="layui-form-pane layui-form layui-card" data-auto="true" method="post">
+    <div class="layui-card-body padding-left-40">
+
+        <div class="layui-form-item">
+            <label class="layui-form-label color-green">系统名称</label>
+            <div class="layui-input-block">
+                <input class="layui-input" name="name" value='{$vo.name|default=""}' data-tips-text="系统名称，将会在前端部分内容显示。">
+            </div>
+        </div>
+
+        <div class="layui-form-item" pane="">
+            <label class="layui-form-label color-green">评论功能</label>
+            <div class="layui-input-block" >
+                {empty name='vo.is_comment'}{assign name='vo.is_comment' value='0'}{/empty}
+                {foreach ['关闭评论功能','开启评论功能'] as $key => $value}
+                {if isset($vo.is_comment) && $vo.is_comment eq $key}
+                <input type="radio" name="is_comment" value="{$key}" title="{$value}" checked="">
+                {else}
+                <input type="radio" name="is_comment" value="{$key}" title="{$value}">
+                {/if}
+                {/foreach}
+            </div>
+        </div>
+
+        <div class="layui-form-item" pane="">
+            <label class="layui-form-label color-green">评论审核</label>
+            <div class="layui-input-block" >
+                {empty name='vo.comment_check'}{assign name='vo.comment_check' value='0'}{/empty}
+                {foreach ['关闭评论审核','开启评论审核'] as $key => $value}
+                {if isset($vo.comment_check) && $vo.comment_check eq $key}
+                <input type="radio" name="comment_check" value="{$key}" title="{$value}" checked="">
+                {else}
+                <input type="radio" name="comment_check" value="{$key}" title="{$value}">
+                {/if}
+                {/foreach}
+            </div>
+        </div>
+    </div>
+
+    <div class="hr-line-dashed"></div>
+
+    <div class="layui-form-item text-center">
+        <button class="layui-btn" type='submit'>保存数据</button>
+        <button class="layui-btn layui-btn-danger" data-close type='button' data-confirm="确定要取消编辑吗？">取消编辑</button>
+    </div>
+</form>

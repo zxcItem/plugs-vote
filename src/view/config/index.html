@@ -1,0 +1,60 @@
+{extend name='main'}
+
+{block name="button"}
+<!--{if auth('params')}-->
+<a class="layui-btn layui-btn-sm layui-btn-primary" data-modal="{:url('params')}">{:lang('修改参数')}</a>
+<!--{/if}-->
+{/block}
+
+{block name="content"}
+<div class="layui-card padding-20 shadow">
+    <div class="layui-card-body">
+        <div class="layui-form-item">
+            <div class="help-label"><b>系统名称</b>Name</div>
+            <label class="relative block">
+                <input readonly value="{$data.name|default=''}" placeholder="请设置系统名称" class="layui-input layui-bg-gray">
+            </label>
+            <p class="help-block">请填写系统名称，将会在前端部分内容显示。</p>
+        </div>
+        <div class="layui-form-item">
+            <div class="help-label"><b>评论功能</b>IsComment</div>
+            <div class="layui-input layui-bg-gray flex-x-center">
+                {empty name='data.is_comment'}
+                <i class="layui-icon layui-icon-error margin-right-5 color-red"></i>未启用评论功能
+                {else}
+                <i class="layui-icon layui-icon-success color-green margin-right-5"></i>已启用评论功能
+                {/empty}
+            </div>
+            <span class="help-block">开启评论功能之后，用户才能在前端页面开到评论入口，否则无法评论</span>
+        </div>
+        <div class="layui-form-item">
+            <div class="help-label"><b>评论审核</b>CommentCheck</div>
+            <div class="layui-input layui-bg-gray flex-x-center">
+                {empty name='data.comment_check'}
+                <i class="layui-icon layui-icon-error margin-right-5 color-red"></i>未启用评论审核后
+                {else}
+                <i class="layui-icon layui-icon-success color-green margin-right-5"></i>已启用评论审核
+                {/empty}
+            </div>
+            <span class="help-block">开启评论审核之后，用户评论提交会处于待审核状态，只有管理员审核通过后才会在前端评论列表中显示。</span>
+        </div>
+        <div class="layui-form-item margin-bottom-0">
+            <div class="layui-row layui-col-space10 portal-block-container notselect margin-bottom-0">
+                <div class="help-label"><b>{:lang('内容管理')}</b>Content</div>
+                {foreach $pages as $k => $v}
+                <div class="layui-col-sm4 layui-col-md4 layui-col-lg3">
+                    <div class="pointer" data-open="{:url($v.temp)}?code={$v.name}">
+                        <div class="portal-block-item nowrap think-bg-blue">
+                            <div class="font-s14" style="opacity:0.6">编辑内容</div>
+                            <div class="font-s15" style="opacity:0.8">{$v.title|default=''}</div>
+                        </div>
+                        <i class="portal-block-icon layui-icon layui-icon-form"></i>
+                    </div>
+                </div>
+                {/foreach}
+            </div>
+        </div>
+    </div>
+</div>
+<!--{/if}-->
+{/block}

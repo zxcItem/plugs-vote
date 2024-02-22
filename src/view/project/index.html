@@ -1,0 +1,109 @@
+{extend name='../../admin/view/table'}
+
+{block name="button"}
+{if isset($type) and $type eq 'index'}
+<!--{if auth("add")}-->
+<button data-modal='{:url("add")}' class='layui-btn layui-btn-sm layui-btn-primary'>添加项目</button>
+<!--{/if}-->
+<!--{if auth("state")}-->
+<a data-confirm="确定要批量禁用项目吗？" data-table-id="ProjectTable" data-action="{:url('state')}" data-rule="id#{id};status#0" class='layui-btn layui-btn-sm layui-btn-primary'>批量禁用</a>
+<!--{/if}-->
+{else}
+<!--{if auth("state")}-->
+<a data-confirm="确定要批量恢复项目吗？" data-table-id="ProjectTable" data-action="{:url('state')}" data-rule="id#{id};status#1" class='layui-btn layui-btn-sm layui-btn-primary'>批量恢复</a>
+<!--{/if}-->
+<!--{if auth("remove")}-->
+<a data-confirm="确定永久删除项目吗？" data-table-id="ProjectTable" data-action='{:url("remove")}' data-rule="id#{id}" class='layui-btn layui-btn-sm layui-btn-primary'>批量删除</a>
+<!--{/if}-->
+{/if}
+{/block}
+
+{block name="content"}
+<div class="layui-tab layui-tab-card">
+    <ul class="layui-tab-title">
+        {foreach ['index'=>'项目管理','recycle'=>'回 收 站'] as $k=>$v}{if isset($type) and $type eq $k}
+        <li data-open="{:url('index')}?type={$k}" class="layui-this color-green">{$v}</li>
+        {else}
+        <li data-open="{:url('index')}?type={$k}">{$v}</li>
+        {/if}{/foreach}
+    </ul>
+    <div class="layui-tab-content">
+        {include file='project/index_search'}
+        <table id="ProjectTable" data-url="{:request()->url()}"></table>
+    </div>
+</div>
+{/block}
+
+{block name='script'}
+<script>
+    $(function () {
+        let $table = $('#ProjectTable').layTable({
+            even: true, height: 'full',
+            sort: {field: 'sort desc,id', type: 'desc'},
+            cellExpandedMode: 'tips',
+            cols: [[
+                {checkbox: true, fixed: true},
+                {field: 'sort', title: '排序权重', width: 100, align: 'center', sort: true, templet: '#SortInputTpl'},
+                {
+                    field: 'cover', title: '封面', width: 60, align: 'center', templet: function (d) {
+                        if (!d.cover) return '';
+                        return layui.laytpl('<div class="headimg headimg-xs margin-0" data-tips-image data-tips-hover data-lazy-src="{{d.cover}}"></div>').render(d);
+                    }
+                },
+                {field: 'code', title: '编号',  align: 'center',minWidth: 100},
+                {field: 'title', title: '标题',  align: 'center',minWidth: 100},
+                {field: 'views', title: '浏览量',  align: 'center',minWidth: 100},
+                {field: 'start_time', title: '开始时间', align: 'center', minWidth: 170},
+                {field: 'end_time', title: '结束时间', align: 'center', minWidth: 170},
+                {
+                    field: 'xurl', title: '报表', minWidth: '80', align: 'center', templet: function (d) {
+                        return laytpl('<a data-title="统计报表【{{d.title}}】" data-modal="{:url("total")}?code={{d.code}}" data-width="1500px" class="layui-btn layui-btn-sm layui-bg-blue"><i class="layui-icon layui-icon-chart"></a>').render(d);
+                    }
+                },
+                {field: 'status', title: '活动状态', align: 'center', minWidth: 110, templet: '#StatusSwitchTpl'},
+                {field: 'create_time', title: '创建时间', align: 'center', minWidth: 170, sort: true},
+                {toolbar: '#toolbar', title: '操作面板', align: 'center', minWidth: 150, fixed: 'right'}
+            ]]
+        });
+
+        // 数据状态切换操作
+        layui.form.on('switch(StatusSwitch)', function (obj) {
+            let data = {code: obj.value, status: obj.elem.checked > 0 ? 1 : 0};
+            $.form.load("{:url('state')}", data, 'post', function (ret) {
+                ret.code > 0 ? $table.trigger('reload') : $.msg.error(ret.info, 3, function () {
+                    $table.trigger('reload');
+                });
+                return false;
+            }, false);
+        });
+    });
+</script>
+<!-- 数据状态切换模板 -->
+<script type="text/html" id="StatusSwitchTpl">
+    <!--{if auth("state")}-->
+    <input type="checkbox" value="{{d.code}}" lay-skin="switch" lay-text="已激活|已禁用" lay-filter="StatusSwitch" {{d.status>0?'checked':''}}>
+    <!--{else}-->
+    {{d.status ? '<b class="color-green">已启用</b>' : '<b class="color-red">已禁用</b>'}}
+    <!--{/if}-->
+</script>
+
+<!-- 列表排序权重模板 -->
+<script type="text/html" id="SortInputTpl">
+    <input type="number" min="0" data-blur-number="0" data-action-blur="{:sysuri()}" data-value="id#{{d.id}};action#sort;sort#{value}" data-loading="false" value="{{d.sort}}" class="layui-input text-center">
+</script>
+
+<script type="text/html" id="toolbar">
+    {if isset($type) and $type eq 'index'}
+    <!-- {if auth("edit")} -->
+    <a class="layui-btn layui-btn-sm" data-modal='{:url("edit")}?id={{d.id}}'>编 辑</a>
+    <!--{/if}-->
+    {else}
+    <!--{if auth("edit")} -->
+    <a class="layui-btn layui-btn-sm" data-modal='{:url("edit")}?id={{d.id}}'>编 辑</a>
+    <!--{/if}-->
+    <!--{if auth("remove")}-->
+    <a class="layui-btn layui-btn-sm layui-btn-danger" data-confirm="确定要永久删除此海报吗？" data-action="{:url('remove')}" data-value="id#{{d.id}}">删 除</a>
+    <!--{/if}-->
+    {/if}
+</script>
+{/block}

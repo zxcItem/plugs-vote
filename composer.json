@@ -1,0 +1,48 @@
+{
+    "type": "think-admin-plugin",
+    "name": "xiaochao/plugs-vote",
+    "license": "MIT",
+    "description": "PlugsVote for ThinkAdmin",
+    "authors": [
+        {
+            "name": "叶落无痕",
+            "email": "1262847141@qq.com"
+        }
+    ],
+    "require": {
+        "php": ">7.1",
+        "ext-gd": "*",
+        "ext-curl": "*",
+        "ext-json": "*",
+        "zoujingli/think-install": "^1.0|@dev",
+        "zoujingli/think-library": "^6.1|@dev",
+        "xiaochao/plugs-account": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "plugin\\vote\\": "src"
+        }
+    },
+    "extra": {
+        "config": {
+            "type": "plugin",
+            "name": "投票系统管理"
+        },
+        "think": {
+            "services": [
+                "plugin\\vote\\Service"
+            ]
+        },
+        "plugin": {
+            "copy": {
+                "stc/database": "database/migrations"
+            }
+        }
+    },
+    "minimum-stability": "dev",
+    "config": {
+        "allow-plugins": {
+            "zoujingli/think-install": true
+        }
+    }
+}

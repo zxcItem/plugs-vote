@@ -1,0 +1,63 @@
+<div class="iframe-pagination notfooter">
+    <fieldset>
+        <legend>条件搜索</legend>
+        <form action="{:sysuri()}" id="ProjectSelectTableSearch" autocomplete="off" class="layui-form layui-form-pane form-search" method="get" onsubmit="return false">
+
+            <div class="layui-form-item layui-inline">
+                <label class="layui-form-label">项目标题</label>
+                <label class="layui-input-inline">
+                    <input class="layui-input" name="title" placeholder="请输入项目标题" value="{$get.title|default=''}">
+                </label>
+            </div>
+
+            <div class="layui-form-item layui-inline">
+                <label class="layui-form-label">创建时间</label>
+                <label class="layui-input-inline">
+                    <input class="layui-input" data-date-range name="create_time" placeholder="请选择创建时间" value="{$get.create_time|default=''}">
+                </label>
+            </div>
+
+            <div class="layui-form-item layui-inline">
+                <button class="layui-btn layui-btn-primary"><i class="layui-icon">&#xe615;</i> 搜 索</button>
+            </div>
+        </form>
+    </fieldset>
+    <table id="ProjectSelectTable" data-url="{:sysuri()}" data-target-search="#ProjectSelectTableSearch"></table>
+</div>
+
+<script>
+    $(function () {
+        // 初始化表格组件
+        $('#ProjectSelectTable').layTable({
+            even: true, height: 'full',
+            sort: {field: 'sort desc,id', type: 'desc'},
+            cols: [[
+                {
+                    field: 'cover', title: '封面', width: 60, align: 'center', templet: function (d) {
+                        if (!d.cover) return '';
+                        return layui.laytpl('<div class="headimg headimg-xs margin-0" data-tips-image data-tips-hover data-lazy-src="{{d.cover}}"></div>').render(d);
+                    }
+                },
+                {field: 'code', title: '编号',  align: 'center',minWidth: 100},
+                {field: 'title', title: '标题',  align: 'center',minWidth: 100},
+                {field: 'start_time', title: '开始时间', align: 'center', minWidth: 170},
+                {field: 'end_time', title: '结束时间', align: 'center', minWidth: 170},
+                {field: 'status', title: '状态', align: 'center', width: 80, templet: '#StatusSwitchTpl'},
+                {toolbar: '#toolbar', title: '操作', align: 'center', width: 100}
+            ]]
+        }).trigger('tool', function (item) {
+            window.setItemValue(item.data.code, item.data.title);
+            $.msg.closeThisModal(this);
+        });
+    });
+</script>
+
+<!-- 操作工具条模板 -->
+<script type="text/html" id="toolbar">
+    <a class="layui-btn layui-btn-sm" lay-event="select">选 择</a>
+</script>
+
+<!-- 数据状态切换模板 -->
+<script type="text/html" id="StatusSwitchTpl">
+    {{-d.status ? '<b class="color-green">已激活</b>' : '<b class="color-red">已禁用</b>'}}
+</script>

@@ -1,0 +1,44 @@
+{extend name='../../admin/view/table'}
+
+{block name="button"}
+<!--{if auth("remove")}-->
+<a data-confirm="确定永久删除这些记录吗？" data-table-id="RecordTable" data-action='{:url("remove")}' data-rule="id#{id}" class='layui-btn layui-btn-sm layui-btn-primary'>批量删除</a>
+<!--{/if}-->
+{/block}
+
+{block name="content"}
+<div class="layui-tab layui-tab-card">
+
+    <div class="layui-tab-content">
+        {include file='record/index_search'}
+        <table id="RecordTable" data-url="{:sysuri('index')}" data-target-search="form.form-search"></table>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('#RecordTable').layTable({
+            even: true, height: 'full',totalRow: true, //开启合计行
+            toolbar: false, //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
+            sort: {field: 'id', type: 'desc'},
+            cols: [[
+                {checkbox: true, fixed: true},
+                {field: 'project_name', title: '所属项目',  align: 'center',minWidth: 100},
+                {field: 'player_name', title: '参赛选手',  align: 'center',minWidth: 100},
+                {field: 'nickname', title: '投票用户',  align: 'center',minWidth: 100},
+                {field: 'login_ip', title: 'IP地址',  align: 'center',minWidth: 100, sort: true},
+                {field: 'address', title: 'IP归属地',  align: 'center',minWidth: 100, sort: true},
+                {field: 'create_time', title: '创建时间', align: 'center', minWidth: 170, sort: true},
+                {toolbar: '#toolbar', title: '操作面板', align: 'center', minWidth: 150, fixed: 'right'}
+            ]]
+        });
+
+    });
+</script>
+
+<script type="text/html" id="toolbar">
+    <!--{if auth("remove")}-->
+    <a class="layui-btn layui-btn-sm layui-btn-danger" data-confirm="确定要永久删除此记录吗？" data-action="{:url('remove')}" data-value="id#{{d.id}}">删 除</a>
+    <!--{/if}-->
+</script>
+{/block}

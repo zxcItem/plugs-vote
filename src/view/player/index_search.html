@@ -1,0 +1,46 @@
+<form action="{:sysuri()}" autocomplete="off" class="layui-form layui-form-pane form-search" method="get" onsubmit="return false">
+
+    <div class="layui-form-item layui-inline">
+        <label class="layui-form-label">参赛选手</label>
+        <label class="layui-input-inline">
+            <input class="layui-input" name="name" placeholder="请输入参赛选手" value="{$get.name|default=''}">
+        </label>
+    </div>
+    <div class="layui-form-item layui-inline">
+        <label class="layui-form-label">项目列表</label>
+        <div class="layui-input-inline">
+            <select class="layui-select" name="code">
+                <option value="">-- 全部 --</option>
+                {foreach $projects as $k=>$v} {if isset($get.code) and $get.code eq $v.code}
+                <option selected value="{$v.code}">{$v.title}</option>
+                {else}
+                <option value="{$v.code}">{$v.title}</option>
+                {/if}{/foreach}
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item layui-inline">
+        <label class="layui-form-label">审核状态</label>
+        <div class="layui-input-inline">
+            <select name="is_check" lay-search class="layui-select">
+                <option value=''>-- {:lang('全部')} --</option>
+                {foreach ['等待审核','审核通过','拒绝通过'] as $key => $value} {if isset($get.is_check) and $get.is_check eq $key.""}
+                <option selected value="{$key}">{$value}</option>
+                {else}
+                <option value="{$key}">{$value}</option>
+                {/if}{/foreach}
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item layui-inline">
+        <label class="layui-form-label">注册时间</label>
+        <div class="layui-input-inline">
+            <input class="layui-input" data-date-range name="create_time" placeholder="请选择注册时间" value="{$get.create_time|default=''}">
+        </div>
+    </div>
+
+    <div class="layui-form-item layui-inline">
+        <input name="type" type="hidden" value="{$type|default='index'}">
+        <button class="layui-btn layui-btn-primary"><i class="layui-icon">&#xe615;</i> 搜 索</button>
+    </div>
+</form>
