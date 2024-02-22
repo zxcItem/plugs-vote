@@ -1,6 +1,6 @@
 <?php
 
-namespace app\vote\controller;
+namespace plugin\vote\controller;
 
 use plugin\vote\model\VoteProject;
 use plugin\vote\model\VoteProjectComment;
