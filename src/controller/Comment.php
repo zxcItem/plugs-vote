@@ -1,9 +1,9 @@
 <?php
 
-namespace plugin\vote\controller;
+namespace plugin\voting\controller;
 
-use plugin\vote\model\VoteProject;
-use plugin\vote\model\VoteProjectComment;
+use plugin\voting\model\VoteProject;
+use plugin\voting\model\VoteProjectComment;
 use think\admin\Controller;
 use think\admin\helper\QueryHelper;
 use think\db\exception\DataNotFoundException;
@@ -13,7 +13,7 @@ use think\db\exception\ModelNotFoundException;
 /**
  * 投票评论管理
  * Class Comment
- * @package plugin\vote\controller
+ * @package plugin\voting\controller
  */
 class Comment extends Controller
 {

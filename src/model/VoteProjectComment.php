@@ -1,6 +1,6 @@
 <?php
 
-namespace plugin\vote\model;
+namespace plugin\voting\model;
 
 
 use plugin\account\model\AccountUser;

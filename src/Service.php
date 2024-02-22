@@ -2,14 +2,14 @@
 
 declare (strict_types=1);
 
-namespace plugin\vote;
+namespace plugin\voting;
 
 use think\admin\Plugin;
 
 /**
  * 组件注册服务
  * @class Service
- * @package plugin\vote
+ * @package plugin\voting
  */
 class Service extends Plugin
 {
@@ -23,7 +23,7 @@ class Service extends Plugin
      * 定义安装包名
      * @var string
      */
-    protected $package = 'xiaochao/plugs-vote';
+    protected $package = 'xiaochao/plugs-voting';
 
 
     /**

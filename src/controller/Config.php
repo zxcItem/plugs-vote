@@ -1,16 +1,16 @@
 <?php
 
 
-namespace plugin\vote\controller;
+namespace plugin\voting\controller;
 
-use plugin\vote\service\ConfigService;
+use plugin\voting\service\ConfigService;
 use think\admin\Controller;
 use think\admin\Exception;
 
 /**
  * 投票参数配置
  * @class Config
- * @package plugin\vote\controller
+ * @package plugin\voting\controller
  */
 class Config extends Controller
 {

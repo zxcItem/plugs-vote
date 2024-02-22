@@ -1,6 +1,6 @@
 <?php
 
-use plugin\vote\Service;
+use plugin\voting\Service;
 use think\admin\extend\PhinxExtend;
 use think\migration\Migrator;
 

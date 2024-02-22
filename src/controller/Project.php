@@ -1,11 +1,11 @@
 <?php
 
-namespace plugin\vote\controller;
+namespace plugin\voting\controller;
 
-use plugin\vote\model\VoteProject;
-use plugin\vote\model\VoteProjectComment;
-use plugin\vote\model\VoteProjectPlayer;
-use plugin\vote\model\VoteProjectRecord;
+use plugin\voting\model\VoteProject;
+use plugin\voting\model\VoteProjectComment;
+use plugin\voting\model\VoteProjectPlayer;
+use plugin\voting\model\VoteProjectRecord;
 use think\admin\Controller;
 use think\admin\extend\CodeExtend;
 use think\admin\helper\QueryHelper;
@@ -16,7 +16,7 @@ use think\db\exception\ModelNotFoundException;
 /**
  * 投票项目管理
  * Class Project
- * @package plugin\vote\controller
+ * @package plugin\voting\controller
  */
 class Project extends Controller
 {

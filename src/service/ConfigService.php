@@ -2,14 +2,14 @@
 
 declare (strict_types=1);
 
-namespace plugin\vote\service;
+namespace plugin\voting\service;
 
 use think\admin\Exception;
 
 /**
  * 投票配置服务
  * @class ConfigService
- * @package plugin\vote\service
+ * @package plugin\voting\service
  */
 class ConfigService
 {
@@ -18,7 +18,7 @@ class ConfigService
      * 投票配置缓存名
      * @var string
      */
-    private static $skey = 'vote.config';
+    private static $skey = 'voting.config';
 
     /**
      * 页面类型配置
@@ -80,7 +80,7 @@ class ConfigService
      */
     public static function setPage(string $code, array $data)
     {
-        return sysdata("vote.page.{$code}", $data);
+        return sysdata("voting.page.{$code}", $data);
     }
 
     /**
@@ -91,6 +91,6 @@ class ConfigService
      */
     public static function getPage(string $code): array
     {
-        return sysdata("vote.page.{$code}");
+        return sysdata("voting.page.{$code}");
     }
 }

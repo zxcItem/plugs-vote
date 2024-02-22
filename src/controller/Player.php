@@ -1,9 +1,9 @@
 <?php
 
-namespace plugin\vote\controller;
+namespace plugin\voting\controller;
 
-use plugin\vote\model\VoteProjectPlayer;
-use plugin\vote\model\VoteProject;
+use plugin\voting\model\VoteProjectPlayer;
+use plugin\voting\model\VoteProject;
 use think\admin\Controller;
 use think\admin\helper\QueryHelper;
 use think\db\exception\DataNotFoundException;
@@ -13,7 +13,7 @@ use think\db\exception\ModelNotFoundException;
 /**
  * 投票选手管理
  * Class Player
- * @package plugin\vote\controller
+ * @package plugin\voting\controller
  */
 class Player extends Controller
 {

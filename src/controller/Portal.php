@@ -1,12 +1,12 @@
 <?php
 
-namespace plugin\vote\controller;
+namespace plugin\voting\controller;
 
 use plugin\account\model\AccountUser;
-use plugin\vote\model\VoteProject;
-use plugin\vote\model\VoteProjectComment;
-use plugin\vote\model\VoteProjectPlayer;
-use plugin\vote\model\VoteProjectRecord;
+use plugin\voting\model\VoteProject;
+use plugin\voting\model\VoteProjectComment;
+use plugin\voting\model\VoteProjectPlayer;
+use plugin\voting\model\VoteProjectRecord;
 use think\admin\Controller;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
@@ -15,7 +15,7 @@ use think\db\exception\ModelNotFoundException;
 /**
  * 投票数据报表
  * Class Portal
- * @package plugin\vote\controller\portal
+ * @package plugin\voting\controller\portal
  */
 class Portal extends Controller
 {

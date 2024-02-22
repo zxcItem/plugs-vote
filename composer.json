@@ -2,7 +2,7 @@
     "type": "think-admin-plugin",
     "name": "xiaochao/plugs-voting",
     "license": "MIT",
-    "description": "PlugsVote for ThinkAdmin",
+    "description": "PlugsVoting for ThinkAdmin",
     "authors": [
         {
             "name": "叶落无痕",
