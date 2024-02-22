@@ -1,6 +1,6 @@
 {
     "type": "think-admin-plugin",
-    "name": "xiaochao/plugs-vote",
+    "name": "xiaochao/plugs-voting",
     "license": "MIT",
     "description": "PlugsVote for ThinkAdmin",
     "authors": [
@@ -20,7 +20,7 @@
     },
     "autoload": {
         "psr-4": {
-            "plugin\\vote\\": "src"
+            "plugin\\voting\\": "src"
         }
     },
     "extra": {
@@ -30,7 +30,7 @@
         },
         "think": {
             "services": [
-                "plugin\\vote\\Service"
+                "plugin\\voting\\Service"
             ]
         },
         "plugin": {
