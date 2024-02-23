@@ -55,7 +55,7 @@ class Project extends Controller
      */
     protected function _form_filter(array &$data)
     {
-        if (empty($code)) $code = CodeExtend::uniqidNumber(5, 'V');
+        if (empty($data['code'])) $data['code'] = CodeExtend::uniqidNumber(5, 'T');
     }
 
     /**
