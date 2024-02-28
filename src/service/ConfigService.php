@@ -18,7 +18,7 @@ class ConfigService
      * 投票配置缓存名
      * @var string
      */
-    private static $skey = 'voting.config';
+    private static $skey = 'plugin.voting.config';
 
     /**
      * 页面类型配置
