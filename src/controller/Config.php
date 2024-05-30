@@ -23,8 +23,9 @@ class Config extends Controller
         '#'  => ['name' => '不跳转'],
         'LK' => ['name' => '自定义链接'],
         'VL' => ['name' => '投票项目列表'],
-        'XL' => ['name' => '投票选手列表', 'node' => 'vote/project/select'],
-        'XS' => ['name' => '投票选手详情', 'node' => 'vote/player/select'],
+        'VS' => ['name' => '投票项目详情', 'node' => 'plugin-voting/project/select'],
+        'XL' => ['name' => '投票选手列表'],
+        'XS' => ['name' => '投票选手详情', 'node' => 'plugin-voting/player/select'],
     ];
 
     /**
