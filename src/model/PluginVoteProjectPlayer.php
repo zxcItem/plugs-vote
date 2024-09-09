@@ -10,7 +10,7 @@ use think\model\relation\HasMany;
 /**
  * 投票选手管理
  */
-class VoteProjectPlayer extends Abs
+class PluginVoteProjectPlayer extends Abs
 {
 
     /**
@@ -19,7 +19,7 @@ class VoteProjectPlayer extends Abs
      */
     public function projectName(): BelongsTo
     {
-        return $this->belongsTo(VoteProject::class,'code','code')->bind(['project_name'=>'title']);
+        return $this->belongsTo(PluginVoteProject::class,'code','code')->bind(['project_name'=>'title']);
     }
 
     /**
@@ -28,7 +28,7 @@ class VoteProjectPlayer extends Abs
      */
     public function record()
     {
-        return $this->hasMany(VoteProjectRecord::class,'player_id');
+        return $this->hasMany(PluginVoteProjectRecord::class,'player_id');
     }
 
 }

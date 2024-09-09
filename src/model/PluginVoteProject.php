@@ -12,7 +12,7 @@ use think\model\relation\HasMany;
 /**
  * 投票项目管理
  */
-class VoteProject extends Abs
+class PluginVoteProject extends Abs
 {
     /**
      * 获取项目特定数据
@@ -32,6 +32,6 @@ class VoteProject extends Abs
      */
     public function record(): HasMany
     {
-        return $this->hasMany(VoteProjectRecord::class,'code','code');
+        return $this->hasMany(PluginVoteProjectRecord::class,'code','code');
     }
 }

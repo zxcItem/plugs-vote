@@ -29,38 +29,23 @@ class InstallVoting extends Migrator
      */
     public function change()
     {
-        $this->_create_insertMenu();
-        $this->_create_vote_project();
-        $this->_create_vote_project_player();
-        $this->_create_vote_project_record();
-        $this->_create_vote_project_comment();
-    }
-
-    /**
-     * 创建菜单
-     * @return void
-     */
-    private function _create_insertMenu()
-    {
-        PhinxExtend::write2menu([
-            [
-                'name' => '投票管理',
-                'subs' => Service::menu(),
-            ],
-        ], ['node' => 'plugin-voting/portal/index']);
+        $this->_create_plugin_vote_project();
+        $this->_create_plugin_vote_project_player();
+        $this->_create_plugin_vote_project_record();
+        $this->_create_plugin_vote_project_comment();
     }
 
     /**
      * 投票-项目
-     * @class VoteProject
-     * @table vote_project
+     * @class PluginVoteProject
+     * @table plugin_vote_project
      * @return void
      */
-    private function _create_vote_project()
+    private function _create_plugin_vote_project()
     {
 
         // 当前数据表
-        $table = 'vote_project';
+        $table = 'plugin_vote_project';
 
         // 存在则跳过
         if ($this->hasTable($table)) return;
@@ -91,15 +76,15 @@ class InstallVoting extends Migrator
             ->addColumn('deleted', 'integer', ['limit' => 1, 'default' => 0, 'null' => true, 'comment' => '删除状态(0未删,1已删)'])
             ->addColumn('create_time', 'datetime', ['default' => NULL, 'null' => true, 'comment' => '创建时间'])
             ->addColumn('update_time', 'datetime', ['default' => NULL, 'null' => true, 'comment' => '更新时间'])
-            ->addIndex('unid', ['name' => 'idx_vote_project_unid'])
-            ->addIndex('code', ['name' => 'idx_vote_project_code'])
-            ->addIndex('title', ['name' => 'idx_vote_project_title'])
-            ->addIndex('start_time', ['name' => 'idx_vote_project_start_time'])
-            ->addIndex('end_time', ['name' => 'idx_vote_project_end_time'])
-            ->addIndex('sort', ['name' => 'idx_vote_project_sort'])
-            ->addIndex('status', ['name' => 'idx_vote_project_status'])
-            ->addIndex('deleted', ['name' => 'idx_vote_project_deleted'])
-            ->addIndex('create_time', ['name' => 'idx_vote_project_create_time'])
+            ->addIndex('unid', ['name' => 'idx_plugin_vote_project_unid'])
+            ->addIndex('code', ['name' => 'idx_plugin_vote_project_code'])
+            ->addIndex('title', ['name' => 'idx_plugin_vote_project_title'])
+            ->addIndex('start_time', ['name' => 'idx_plugin_vote_project_start_time'])
+            ->addIndex('end_time', ['name' => 'idx_plugin_vote_project_end_time'])
+            ->addIndex('sort', ['name' => 'idx_plugin_vote_project_sort'])
+            ->addIndex('status', ['name' => 'idx_plugin_vote_project_status'])
+            ->addIndex('deleted', ['name' => 'idx_plugin_vote_project_deleted'])
+            ->addIndex('create_time', ['name' => 'idx_plugin_vote_project_create_time'])
             ->create();
 
         // 修改主键长度
@@ -108,15 +93,15 @@ class InstallVoting extends Migrator
 
     /**
      * 投票-参赛者
-     * @class VoteProjectPlayer
-     * @table vote_project_player
+     * @class PluginVoteProjectPlayer
+     * @table plugin_vote_project_player
      * @return void
      */
-    private function _create_vote_project_player()
+    private function _create_plugin_vote_project_player()
     {
 
         // 当前数据表
-        $table = 'vote_project_player';
+        $table = 'plugin_vote_project_player';
 
         // 存在则跳过
         if ($this->hasTable($table)) return;
@@ -143,17 +128,17 @@ class InstallVoting extends Migrator
             ->addColumn('deleted', 'integer', ['limit' => 1, 'default' => 0, 'null' => true, 'comment' => '删除状态(0未删,1已删)'])
             ->addColumn('create_time', 'datetime', ['default' => NULL, 'null' => true, 'comment' => '创建时间'])
             ->addColumn('update_time', 'datetime', ['default' => NULL, 'null' => true, 'comment' => '更新时间'])
-            ->addIndex('unid', ['name' => 'idx_vote_project_player_unid'])
-            ->addIndex('code', ['name' => 'idx_vote_project_player_code'])
-            ->addIndex('name', ['name' => 'idx_vote_project_player_name'])
-            ->addIndex('views', ['name' => 'idx_vote_project_player_views'])
-            ->addIndex('votes', ['name' => 'idx_vote_project_player_votes'])
-            ->addIndex('comments', ['name' => 'idx_vote_project_player_comments'])
-            ->addIndex('sort', ['name' => 'idx_vote_project_player_sort'])
-            ->addIndex('is_check', ['name' => 'idx_vote_project_player_is_check'])
-            ->addIndex('status', ['name' => 'idx_vote_project_player_status'])
-            ->addIndex('deleted', ['name' => 'idx_vote_project_player_deleted'])
-            ->addIndex('create_time', ['name' => 'idx_vote_project_player_create_time'])
+            ->addIndex('unid', ['name' => 'idx_plugin_vote_project_player_unid'])
+            ->addIndex('code', ['name' => 'idx_plugin_vote_project_player_code'])
+            ->addIndex('name', ['name' => 'idx_plugin_vote_project_player_name'])
+            ->addIndex('views', ['name' => 'idx_plugin_vote_project_player_views'])
+            ->addIndex('votes', ['name' => 'idx_plugin_vote_project_player_votes'])
+            ->addIndex('comments', ['name' => 'idx_plugin_vote_project_player_comments'])
+            ->addIndex('sort', ['name' => 'idx_plugin_vote_project_player_sort'])
+            ->addIndex('is_check', ['name' => 'idx_plugin_vote_project_player_is_check'])
+            ->addIndex('status', ['name' => 'idx_plugin_vote_project_player_status'])
+            ->addIndex('deleted', ['name' => 'idx_plugin_vote_project_player_deleted'])
+            ->addIndex('create_time', ['name' => 'idx_plugin_vote_project_player_create_time'])
             ->create();
 
         // 修改主键长度
@@ -162,15 +147,15 @@ class InstallVoting extends Migrator
 
     /**
      * 投票-记录
-     * @class VoteProjectRecord
-     * @table vote_project_record
+     * @class PluginVoteProjectRecord
+     * @table plugin_vote_project_record
      * @return void
      */
-    private function _create_vote_project_record()
+    private function _create_plugin_vote_project_record()
     {
 
         // 当前数据表
-        $table = 'vote_project_record';
+        $table = 'plugin_vote_project_record';
 
         // 存在则跳过
         if ($this->hasTable($table)) return;
@@ -187,11 +172,11 @@ class InstallVoting extends Migrator
             ->addColumn('deleted', 'integer', ['limit' => 1, 'default' => 0, 'null' => true, 'comment' => '删除状态(0未删,1已删)'])
             ->addColumn('create_time', 'datetime', ['default' => NULL, 'null' => true, 'comment' => '创建时间'])
             ->addColumn('update_time', 'datetime', ['default' => NULL, 'null' => true, 'comment' => '更新时间'])
-            ->addIndex('unid', ['name' => 'idx_vote_project_record_unid'])
-            ->addIndex('code', ['name' => 'idx_vote_project_record_code'])
-            ->addIndex('player_id', ['name' => 'idx_vote_project_record_player_id'])
-            ->addIndex('deleted', ['name' => 'idx_vote_project_record_deleted'])
-            ->addIndex('create_time', ['name' => 'idx_vote_project_record_create_time'])
+            ->addIndex('unid', ['name' => 'idx_plugin_vote_project_record_unid'])
+            ->addIndex('code', ['name' => 'idx_plugin_vote_project_record_code'])
+            ->addIndex('player_id', ['name' => 'idx_plugin_vote_project_record_player_id'])
+            ->addIndex('deleted', ['name' => 'idx_plugin_vote_project_record_deleted'])
+            ->addIndex('create_time', ['name' => 'idx_plugin_vote_project_record_create_time'])
             ->create();
 
         // 修改主键长度
@@ -200,15 +185,15 @@ class InstallVoting extends Migrator
 
     /**
      * 投票-评论
-     * @class VoteProjectComment
-     * @table vote_project_comment
+     * @class PluginVoteProjectComment
+     * @table plugin_vote_project_comment
      * @return void
      */
-    private function _create_vote_project_comment()
+    private function _create_plugin_vote_project_comment()
     {
 
         // 当前数据表
-        $table = 'vote_project_comment';
+        $table = 'plugin_vote_project_comment';
 
         // 存在则跳过
         if ($this->hasTable($table)) return;
@@ -228,13 +213,13 @@ class InstallVoting extends Migrator
             ->addColumn('deleted', 'integer', ['limit' => 1, 'default' => 0, 'null' => true, 'comment' => '删除状态(0未删,1已删)'])
             ->addColumn('create_time', 'datetime', ['default' => NULL, 'null' => true, 'comment' => '创建时间'])
             ->addColumn('update_time', 'datetime', ['default' => NULL, 'null' => true, 'comment' => '更新时间'])
-            ->addIndex('unid', ['name' => 'idx_vote_project_comment_unid'])
-            ->addIndex('code', ['name' => 'idx_vote_project_comment_code'])
-            ->addIndex('player_id', ['name' => 'idx_vote_project_comment_player_id'])
-            ->addIndex('is_check', ['name' => 'idx_vote_project_comment_is_check'])
-            ->addIndex('status', ['name' => 'idx_vote_project_comment_status'])
-            ->addIndex('deleted', ['name' => 'idx_vote_project_comment_deleted'])
-            ->addIndex('create_time', ['name' => 'idx_vote_project_comment_create_time'])
+            ->addIndex('unid', ['name' => 'idx_plugin_vote_project_comment_unid'])
+            ->addIndex('code', ['name' => 'idx_plugin_vote_project_comment_code'])
+            ->addIndex('player_id', ['name' => 'idx_plugin_vote_project_comment_player_id'])
+            ->addIndex('is_check', ['name' => 'idx_plugin_vote_project_comment_is_check'])
+            ->addIndex('status', ['name' => 'idx_plugin_vote_project_comment_status'])
+            ->addIndex('deleted', ['name' => 'idx_plugin_vote_project_comment_deleted'])
+            ->addIndex('create_time', ['name' => 'idx_plugin_vote_project_comment_create_time'])
             ->create();
 
         // 修改主键长度

@@ -2,10 +2,10 @@
 
 namespace plugin\voting\controller;
 
-use plugin\voting\model\VoteProject;
-use plugin\voting\model\VoteProjectComment;
-use plugin\voting\model\VoteProjectPlayer;
-use plugin\voting\model\VoteProjectRecord;
+use plugin\voting\model\PluginVoteProject;
+use plugin\voting\model\PluginVoteProjectComment;
+use plugin\voting\model\PluginVoteProjectPlayer;
+use plugin\voting\model\PluginVoteProjectRecord;
 use think\admin\Controller;
 use think\admin\extend\CodeExtend;
 use think\admin\helper\QueryHelper;
@@ -32,7 +32,7 @@ class Project extends Controller
     public function index()
     {
         $this->type = $this->get['type'] ?? 'index';
-        VoteProject::mQuery()->layTable(function () {
+        PluginVoteProject::mQuery()->layTable(function () {
             $this->title = '投票项目管理';
         }, function (QueryHelper $query) {
             $query->like('code,title')->equal('status')->dateBetween('create_time');
@@ -64,7 +64,7 @@ class Project extends Controller
      */
     public function add()
     {
-        VoteProject::mForm('form');
+        PluginVoteProject::mForm('form');
     }
 
     /**
@@ -73,7 +73,7 @@ class Project extends Controller
      */
     public function edit()
     {
-        VoteProject::mForm('form');
+        PluginVoteProject::mForm('form');
     }
 
     /**
@@ -82,7 +82,7 @@ class Project extends Controller
      */
     public function state()
     {
-        VoteProject::mSave($this->_vali([
+        PluginVoteProject::mSave($this->_vali([
             'status.in:0,1'  => '状态值范围异常！',
             'status.require' => '状态值不能为空！',
         ]),'code');
@@ -95,7 +95,7 @@ class Project extends Controller
      */
     protected function _save_result(bool $result){
         if ($result) {
-            VoteProjectPlayer::mk()->where('code',input('code'))->save(['status'=>input('status')]);
+            PluginVoteProjectPlayer::mk()->where('code',input('code'))->save(['status'=>input('status')]);
         }
     }
 
@@ -105,7 +105,7 @@ class Project extends Controller
      */
     public function remove()
     {
-        VoteProject::mDelete();
+        PluginVoteProject::mDelete();
     }
 
     /**
@@ -140,30 +140,30 @@ class Project extends Controller
     public function total()
     {
         $code = $this->request->param('code');
-        $this->recordTotal = VoteProjectRecord::mk()->where(['code'=>$code,'deleted'=>0])->cache(true, 60)->count();
-        $this->userTotal = count(array_unique(VoteProjectRecord::mk()->where(['code'=>$code,'deleted'=>0])->cache(true, 60)->column('unid')));
-        $this->playerTotal = VoteProjectPlayer::mk()->where(['code'=>$code,'is_check'=>1,'status'=>1,'deleted'=>0])->cache(true, 60)->count();
-        $this->commentTotal = VoteProjectComment::mk()->where(['code'=>$code,'deleted'=>0])->cache(true, 60)->count();
-        $this->playerList = VoteProjectPlayer::mk()->where(['code'=>$code,'is_check'=>1,'status'=>1,'deleted'=>0])->field('id,name')->withCount(['record'=>'count'])->cache(true, 60)->select()->toArray();
+        $this->recordTotal = PluginVoteProjectRecord::mk()->where(['code'=>$code,'deleted'=>0])->cache(true, 60)->count();
+        $this->userTotal = count(array_unique(PluginVoteProjectRecord::mk()->where(['code'=>$code,'deleted'=>0])->cache(true, 60)->column('unid')));
+        $this->playerTotal = PluginVoteProjectPlayer::mk()->where(['code'=>$code,'is_check'=>1,'status'=>1,'deleted'=>0])->cache(true, 60)->count();
+        $this->commentTotal = PluginVoteProjectComment::mk()->where(['code'=>$code,'deleted'=>0])->cache(true, 60)->count();
+        $this->playerList = PluginVoteProjectPlayer::mk()->where(['code'=>$code,'is_check'=>1,'status'=>1,'deleted'=>0])->field('id,name')->withCount(['record'=>'count'])->cache(true, 60)->select()->toArray();
 
         for ($i = 0; $i < 24; $i++) {
             $date = date('Y-m-d H',strtotime(date('Y-m-d')) + $i * 3600);
             $this->todayHours[] = [
                 '当天时间' => date('H:i', strtotime(date('Y-m-d')) + $i * 3600),
-                '今日统计' => VoteProjectRecord::mk()->where(['code'=>$code,'deleted'=>0])->whereLike('create_time', "{$date}%")->count()
+                '今日统计' => PluginVoteProjectRecord::mk()->where(['code'=>$code,'deleted'=>0])->whereLike('create_time', "{$date}%")->count()
             ];
         }
 
-        $this->todayRecord = VoteProjectRecord::mk()->where(['code'=>$code,'deleted'=>0])->whereDay('create_time')->cache(true, 60)->count();
-        $this->todayUser = count(array_unique(VoteProjectRecord::mk()->where(['code'=>$code,'deleted'=>0])->whereDay('create_time')->cache(true, 60)->column('unid')));
-        $this->todayPlayer = VoteProjectPlayer::mk()->where(['code'=>$code,'is_check'=>0,'status'=>1,'deleted'=>0])->cache(true, 60)->count();
-        $this->todayComment = VoteProjectComment::mk()->where(['code'=>$code,'is_check'=>1,'deleted'=>0])->cache(true, 60)->count();
+        $this->todayRecord = PluginVoteProjectRecord::mk()->where(['code'=>$code,'deleted'=>0])->whereDay('create_time')->cache(true, 60)->count();
+        $this->todayUser = count(array_unique(PluginVoteProjectRecord::mk()->where(['code'=>$code,'deleted'=>0])->whereDay('create_time')->cache(true, 60)->column('unid')));
+        $this->todayPlayer = PluginVoteProjectPlayer::mk()->where(['code'=>$code,'is_check'=>0,'status'=>1,'deleted'=>0])->cache(true, 60)->count();
+        $this->todayComment = PluginVoteProjectComment::mk()->where(['code'=>$code,'is_check'=>1,'deleted'=>0])->cache(true, 60)->count();
 
         for ($i = 30; $i >= 0; $i--) {
             $date = date('Y-m-d', strtotime("-{$i}days"));
             $this->proDays[] = [
                 '当天日期' => date('m-d', strtotime("-{$i}days")),
-                '投票统计' => VoteProjectRecord::mk()->where(['code'=>$code,'deleted'=>0])->whereLike('create_time', "{$date}%")->count(),
+                '投票统计' => PluginVoteProjectRecord::mk()->where(['code'=>$code,'deleted'=>0])->whereLike('create_time', "{$date}%")->count(),
             ];
         }
         $this->fetch();

@@ -1,21 +1,15 @@
 {
     "type": "think-admin-plugin",
     "name": "xiaochao/plugs-voting",
-    "license": "MIT",
-    "description": "PlugsVoting for ThinkAdmin",
+    "version": "dev-master",
     "authors": [
         {
             "name": "叶落无痕",
-            "email": "1262847141@qq.com"
+            "email": "zxcaile@foxmail.com"
         }
     ],
     "require": {
         "php": ">7.1",
-        "ext-gd": "*",
-        "ext-curl": "*",
-        "ext-json": "*",
-        "zoujingli/think-install": "^1.0|@dev",
-        "zoujingli/think-library": "^6.1|@dev",
         "xiaochao/plugs-account": "dev-master"
     },
     "autoload": {
@@ -25,8 +19,10 @@
     },
     "extra": {
         "config": {
-            "type": "plugin",
-            "name": "投票系统管理"
+            "type": "module",
+            "name": "投票平台管理",
+            "cover": "iconfont iconfont-similar",
+            "description": "投票系统基础模块,投票项目按组分选手投票,评论及记录等基础管理"
         },
         "think": {
             "services": [

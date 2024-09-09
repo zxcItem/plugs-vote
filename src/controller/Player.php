@@ -2,8 +2,8 @@
 
 namespace plugin\voting\controller;
 
-use plugin\voting\model\VoteProjectPlayer;
-use plugin\voting\model\VoteProject;
+use plugin\voting\model\PluginVoteProjectPlayer;
+use plugin\voting\model\PluginVoteProject;
 use think\admin\Controller;
 use think\admin\helper\QueryHelper;
 use think\db\exception\DataNotFoundException;
@@ -29,9 +29,9 @@ class Player extends Controller
     public function index()
     {
         $this->type = $this->get['type'] ?? 'index';
-        VoteProjectPlayer::mQuery()->layTable(function () {
+        PluginVoteProjectPlayer::mQuery()->layTable(function () {
             $this->title = '投票选手管理';
-            $this->projects = VoteProject::item();
+            $this->projects = PluginVoteProject::item();
         }, function (QueryHelper $query) {
             $query->with(['projectName'])->like('name')->equal('code,status,is_check')->dateBetween('create_time');
             $query->where(['deleted' => 0, 'status' => intval($this->type === 'index')]);
@@ -54,7 +54,7 @@ class Player extends Controller
     protected function _form_filter(array &$data)
     {
         if ($this->request->isGet()){
-            $this->projects = VoteProject::item();
+            $this->projects = PluginVoteProject::item();
         }
 
     }
@@ -65,7 +65,7 @@ class Player extends Controller
      */
     public function add()
     {
-        VoteProjectPlayer::mForm('form');
+        PluginVoteProjectPlayer::mForm('form');
     }
 
     /**
@@ -74,7 +74,7 @@ class Player extends Controller
      */
     public function edit()
     {
-        VoteProjectPlayer::mForm('form');
+        PluginVoteProjectPlayer::mForm('form');
     }
 
     /**
@@ -83,7 +83,7 @@ class Player extends Controller
      */
     public function state()
     {
-        VoteProjectPlayer::mSave($this->_vali([
+        PluginVoteProjectPlayer::mSave($this->_vali([
             'status.in:0,1'  => '状态值范围异常！',
             'status.require' => '状态值不能为空！',
         ]));
@@ -95,7 +95,7 @@ class Player extends Controller
      */
     public function remove()
     {
-        VoteProjectPlayer::mDelete();
+        PluginVoteProjectPlayer::mDelete();
     }
 
     /**

@@ -3,14 +3,14 @@
 namespace plugin\voting\model;
 
 
-use plugin\account\model\AccountUser;
+use plugin\account\model\PluginAccountUser;
 use plugin\account\model\Abs;
 use think\model\relation\BelongsTo;
 
 /**
  * 投票记录管理
  */
-class VoteProjectRecord extends Abs
+class PluginVoteProjectRecord extends Abs
 {
 
     /**
@@ -19,7 +19,7 @@ class VoteProjectRecord extends Abs
      */
     public function projectName(): BelongsTo
     {
-        return $this->belongsTo(VoteProject::class,'code','code')->bind(['project_name'=>'title']);
+        return $this->belongsTo(PluginVoteProject::class,'code','code')->bind(['project_name'=>'title']);
     }
 
     /**
@@ -28,7 +28,7 @@ class VoteProjectRecord extends Abs
      */
     public function userName(): BelongsTo
     {
-        return $this->belongsTo(AccountUser::class,'unid','id')->bind(['nickname']);
+        return $this->belongsTo(PluginAccountUser::class,'unid','id')->bind(['nickname']);
     }
 
     /**
@@ -37,6 +37,6 @@ class VoteProjectRecord extends Abs
      */
     public function playerName(): BelongsTo
     {
-        return $this->belongsTo(VoteProjectPlayer::class,'player_id','id')->bind(['player_name'=>'name']);
+        return $this->belongsTo(PluginVoteProjectPlayer::class,'player_id','id')->bind(['player_name'=>'name']);
     }
 }

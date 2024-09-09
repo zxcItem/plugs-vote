@@ -2,8 +2,8 @@
 
 namespace plugin\voting\controller;
 
-use plugin\voting\model\VoteProject;
-use plugin\voting\model\VoteProjectComment;
+use plugin\voting\model\PluginVoteProject;
+use plugin\voting\model\PluginVoteProjectComment;
 use think\admin\Controller;
 use think\admin\helper\QueryHelper;
 use think\db\exception\DataNotFoundException;
@@ -28,9 +28,9 @@ class Comment extends Controller
      */
     public function index()
     {
-        VoteProjectComment::mQuery()->layTable(function () {
+        PluginVoteProjectComment::mQuery()->layTable(function () {
             $this->title = '投票评论管理';
-            $this->projects = VoteProject::item();
+            $this->projects = PluginVoteProject::item();
         }, function (QueryHelper $query) {
             $query->with(['projectName','userName','playerName'])->equal('code')->like('login_ip')->dateBetween('create_time');
         });
@@ -52,7 +52,7 @@ class Comment extends Controller
      */
     public function edit()
     {
-        VoteProjectComment::mForm('form');
+        PluginVoteProjectComment::mForm('form');
     }
 
 
@@ -62,6 +62,6 @@ class Comment extends Controller
      */
     public function remove()
     {
-        VoteProjectComment::mDelete();
+        PluginVoteProjectComment::mDelete();
     }
 }
