@@ -35,7 +35,7 @@ class Service extends Plugin
     {
         $code = app(static::class)->appCode;
         // 设置插件菜单
-        return array_merge(AccountService::menu(), [
+        return [
             [
                 'name' => '投票管理',
                 'subs' => [
@@ -47,6 +47,6 @@ class Service extends Plugin
                     ['name' => '投票评论管理', 'icon' => 'layui-icon layui-icon-dialogue', 'node' => "{$code}/comment/index"],
                 ],
             ],
-        ]);
+        ];
     }
 }
