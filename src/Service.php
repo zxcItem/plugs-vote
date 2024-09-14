@@ -4,7 +4,6 @@ declare (strict_types=1);
 
 namespace plugin\voting;
 
-use plugin\account\Service as AccountService;
 use think\admin\Plugin;
 
 /**

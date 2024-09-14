@@ -1,6 +1,5 @@
 <?php
 
-
 namespace plugin\voting\controller;
 
 use plugin\voting\service\ConfigService;
